@@ -1,0 +1,35 @@
+.grid-container {
+    display: inline-grid;
+    width: 100%;
+    grid-template-columns: auto auto auto;
+    padding: 5px;
+}
+
+.grid-container > div {
+    padding: 5px;
+}
+
+.center {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.left{
+   float:left;
+}
+
+.right{
+   margin-top: auto;
+   float:right;
+}
+
+.canvas {
+  border: dashed .2em #fff;
+  height: 90vh;
+}
+
+#map{
+    height: 500px;
+    width: 100%;
+}

@@ -1,0 +1,22 @@
+{
+    "compilerOptions": {
+        "target": "es6",
+        "allowJs": true,
+        "module": "commonjs",
+        "outDir": "./dist/server",
+        "sourceMap": true,
+        "noResolve": false,
+        "moduleResolution": "node",
+        "typeRoots": [
+            "node_modules/@types",
+        ],
+        "lib": [
+            "es2017"
+          ]
+    },
+    "exclude": [
+        "dist",
+        "test",
+        "node_modules"
+    ]
+}

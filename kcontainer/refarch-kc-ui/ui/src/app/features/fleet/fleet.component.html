@@ -1,0 +1,19 @@
+
+<div class="row">
+<h4>Fleets</h4>
+<mat-form-field>
+  <mat-select placeholder="Select one fleet" (selectionChange)="loadFleet($event.value)" [(value)]="selectedFleet" name="fleet">
+    <mat-option *ngFor="let fleet of fleets" [value]="fleet.name">
+      {{fleet.name}}
+    </mat-option>
+  </mat-select>
+</mat-form-field>
+<!-- not needed now as simulation is at ship level
+<button mat-flat-button color="primary"  *ngIf="getEnableShip()" (click)="startFleet()">Start Fleet Simulation</button>
+<button mat-flat-button color="primary"  *ngIf="getEnableShip()" (click)="stopFleet()">Stop Fleet Simulation</button>
+-->
+</div>
+<div class="row">
+
+<app-ships *ngIf="getEnableShip()" [fleetName]="selectedFleet"></app-ships>
+</div>

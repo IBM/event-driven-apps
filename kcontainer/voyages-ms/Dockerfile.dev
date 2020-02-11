@@ -1,0 +1,31 @@
+FROM node:8-stretch
+
+# Update packages and install dependency packages for services
+RUN apt-get update \
+ && dpkg -P libssl-dev \
+ && apt-get install -y liblz4-dev libssl1.0-dev libsasl2-dev \
+ && apt-get clean \
+ && export LDFLAGS=-L/usr/local/opt/openssl/lib \
+ && export CPPFLAGS=-I/usr/local/opt/openssl/include \
+ && echo 'Finished installing dependencies'
+
+WORKDIR "/app"
+
+COPY package.json /app/
+RUN cd /app && npm install
+
+COPY . /app
+
+RUN adduser --disabled-password --gecos '' -u 9999 --gid 0 nodejs
+# https://docs.okd.io/latest/creating_images/guidelines.html#openshift-specific-guidelines
+RUN chgrp -R 0 /app && \
+    chmod -R g=u /app && \
+    chmod -R a+rwx /app
+
+USER 9999
+ENV NODE_ENV production
+ENV PORT 3000
+
+EXPOSE 3000
+
+CMD ["npm", "run-script", "dev"]

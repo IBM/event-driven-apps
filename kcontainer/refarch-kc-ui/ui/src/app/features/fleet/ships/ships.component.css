@@ -1,0 +1,22 @@
+.wrapper {
+    width:100%;
+    margin : 0;
+}
+
+#mapSummary {
+    margin-top: 20px;
+    margin-bottom: 20px;
+ }
+
+ .selected {
+   background-color: #CFD8DC !important;
+   color: white;
+ }
+ 
+ table {
+    width: 100%;
+  }
+  
+  buttonpad {
+    padding: 3px 3px 3px 3px;
+  }

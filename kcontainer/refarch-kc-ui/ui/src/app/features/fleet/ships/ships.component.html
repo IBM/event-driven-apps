@@ -1,0 +1,59 @@
+
+<div class="container-fluid">
+  <div class="row">
+      <h4>Ships in {{fleetName}}</h4>
+      <div class="col-md-10">
+          <table mat-table [dataSource]="ships" class="mat-elevation-z8">
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <mat-header-cell *matHeaderCellDef> Name </mat-header-cell>
+                <mat-cell *matCellDef="let ship"> {{ship.name}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="type">
+                <mat-header-cell *matHeaderCellDef> Type </mat-header-cell>
+                <mat-cell *matCellDef="let ship"> {{ship.type}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef> Status </mat-header-cell>
+                <mat-cell *matCellDef="let ship"> {{ship.status}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="port">
+                <mat-header-cell *matHeaderCellDef> Port </mat-header-cell>
+                <mat-cell *matCellDef="let ship"> {{ship.port}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="latitude">
+                <mat-header-cell *matHeaderCellDef> Latitude </mat-header-cell>
+                <mat-cell *matCellDef="let ship"> {{ship.latitude}} </mat-cell>
+              </ng-container>
+              <ng-container matColumnDef="longitude">
+                  <mat-header-cell *matHeaderCellDef> Longitude </mat-header-cell>
+                  <mat-cell *matCellDef="let ship"> {{ship.longitude}} </mat-cell>
+                </ng-container>
+              <!-- Actions Column -->
+               <ng-container matColumnDef="actions">
+              <mat-header-cell *matHeaderCellDef>
+
+              </mat-header-cell>
+
+              <mat-cell *matCellDef="let ship">
+                <button class="buttonpad" *ngIf="ship.name == 'JimminyCricket'" mat-icon-button color="primary" (click)="onSelect(ship)" [routerLink]="['/ship', ship.name]"><mat-icon>edit</mat-icon></button>
+              </mat-cell>
+            </ng-container>
+
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+          </table>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+      <div id="map" class="col-md-12">
+          <div id="mapSummary">
+              <app-leaflet-map [ships]="ships"></app-leaflet-map>
+          </div>
+       </div>
+  </div>
+
+
+
+<!-- <app-ship [ship]="selectedship"></app-ship> -->

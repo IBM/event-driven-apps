@@ -1,0 +1,20 @@
+apiVersion: skaffold/v2alpha2
+kind: Config
+build:
+  tagPolicy:
+    envTemplate:
+      template: "{{.IMAGE_NAME}}"
+  artifacts:
+    - image: us.icr.io/paolo/kc-voyages-ms
+      context: .
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        infer:
+          - 'server/**/*.js'
+          - 'server/**/*.json'
+deploy:
+  kubectl:
+    manifests:
+      - k8s/deployment-knative.yaml
+      - k8s/service.yaml

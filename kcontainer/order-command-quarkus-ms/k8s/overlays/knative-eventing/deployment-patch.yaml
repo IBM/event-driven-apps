@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "ordercommandms-deployment"
+spec:
+  template:
+    spec:
+      containers:
+      - name: "ordercommandms"
+        image: "us.icr.io/paolo/order-command-ms:1.0.0"
+        imagePullPolicy: Always

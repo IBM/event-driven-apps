@@ -1,0 +1,31 @@
+apiVersion: messaging.knative.dev/v1alpha1
+kind: Subscription
+metadata:
+  name: springcontainerms-orderevents
+spec:
+  channel:
+    apiVersion: messaging.knative.dev/v1alpha1
+    kind: Channel
+    name: orders
+  subscriber:
+    ref:
+      apiVersion: v1
+      kind: Service
+      name: springcontainerms-service
+    uri: /orderevents
+---
+apiVersion: messaging.knative.dev/v1alpha1
+kind: Subscription
+metadata:
+  name: springcontainerms-containerevents
+spec:
+  channel:
+    apiVersion: messaging.knative.dev/v1alpha1
+    kind: Channel
+    name: containers
+  subscriber:
+    ref:
+      apiVersion: v1
+      kind: Service
+      name: springcontainerms-service
+    uri: /containerevents    

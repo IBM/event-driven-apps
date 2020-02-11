@@ -1,0 +1,44 @@
+FROM centos:latest
+
+ENV MAVEN_VERSION=3.6.2
+ENV MAVEN_URL=https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz
+ENV MAVEN_HOME /usr/share/maven
+ENV JAVA_HOME /etc/alternatives/java_sdk
+
+RUN yum -y update && \
+    yum install -y --setopt=skip_missing_names_on_install=False \
+            rsync java-11-openjdk-devel nodejs && \
+    yum clean all -y && \
+    mkdir -p /usr/share/maven && \
+    curl -fsSL ${MAVEN_URL} | tar -xzC /usr/share/maven --strip-components=1 && \
+    ln -s /usr/share/maven/bin/mvn /usr/bin/mvn &&\
+    npm install -g nodemon
+
+RUN adduser -u 9999 -g 0 spring
+USER 9999
+RUN mkdir /home/spring/dev/
+WORKDIR /home/spring/dev/
+
+COPY pom.xml /home/spring/dev/
+COPY src /home/spring/dev/src
+COPY mvn-run-dev.sh /home/spring/
+
+USER root
+RUN mv /home/spring/mvn-run-dev.sh /usr/local/bin && \
+    chmod a+x /usr/local/bin/mvn-run-dev.sh
+
+# adjust permissions to make spring dev mode work in openshift
+# https://docs.okd.io/latest/creating_images/guidelines.html#openshift-specific-guidelines
+RUN chgrp -R 0 /home/spring && \
+    chmod -R g=u /home/spring && \
+    chmod -R a+rwx /home/spring && \
+    mkdir -p /.m2/repository && \
+    chgrp -R 0 /.m2/repository && \
+    chmod -R g=u /.m2/repository && \
+    chmod -R a+rwx /.m2/repository 
+
+USER 9999
+EXPOSE 8080
+
+CMD ["bash", "-c", "/usr/local/bin/mvn-run-dev.sh"]
+

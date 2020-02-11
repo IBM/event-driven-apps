@@ -1,0 +1,28 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "ordercommandms-deployment"
+spec:
+  template:
+    spec:
+      containers:
+      - name: "ordercommandms"
+        env:
+          - name: KAFKA_BROKERS
+            valueFrom:
+              secretKeyRef:
+                name: "kcontainer-es-kbsf"
+                key: kafka_brokers_sasl_flat
+          - name: ORDER_TOPIC
+            value: "orders"
+          - name: ORDERCOMMAND_TOPIC
+            value: "orderCommands"
+          - name: ERROR_TOPIC
+            value: "errors"
+          - name: KAFKA_APIKEY
+            valueFrom:
+              secretKeyRef:
+                name: "kcontainer-es"
+                key: api_key
+    
+        

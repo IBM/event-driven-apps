@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "ordercommandms-service"
+  labels:
+    chart: "ordercommandms-1.0.0"
+spec:
+  selector:
+    app: "ordercommandms-selector"
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+

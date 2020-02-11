@@ -1,0 +1,19 @@
+apiVersion: skaffold/v2alpha2
+kind: Config
+build:
+  tagPolicy:
+    envTemplate:
+      template: "{{.IMAGE_NAME}}"
+  artifacts:
+    - image: us.icr.io/paolo/kc-fleet-ms
+      context: .
+      docker:
+        dockerfile: src/main/docker/Dockerfile.dev
+      sync:
+        infer:
+          - 'src/**/*.java'
+deploy:
+  kubectl:
+    manifests:
+      - k8s/deployment-knative.yaml
+      - k8s/service.yaml

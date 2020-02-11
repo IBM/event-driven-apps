@@ -1,0 +1,17 @@
+apiVersion: messaging.knative.dev/v1alpha1
+kind: Subscription
+metadata:
+  name: voyagesms-orderevents
+spec:
+  channel:
+    apiVersion: messaging.knative.dev/v1alpha1
+    kind: Channel
+    name: orders
+  subscriber:
+    ref:
+      apiVersion: v1
+      kind: Service
+      name: voyagesms-service
+    uri: /voyage/orderevents
+
+ 

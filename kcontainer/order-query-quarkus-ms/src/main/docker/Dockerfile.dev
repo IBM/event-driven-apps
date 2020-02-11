@@ -1,0 +1,47 @@
+FROM centos:latest
+
+ENV MAVEN_VERSION=3.6.2
+ENV MAVEN_URL=https://archive.apache.org/dist/maven/maven-3/${MAVEN_VERSION}/binaries/apache-maven-$MAVEN_VERSION-bin.tar.gz
+ENV MAVEN_HOME /usr/share/maven
+ENV JAVA_HOME /etc/alternatives/java_sdk
+
+RUN yum -y update && \
+    yum install -y --setopt=skip_missing_names_on_install=False \
+            rsync java-11-openjdk-devel && \
+    yum clean all -y && \
+    mkdir -p /usr/share/maven && \
+    curl -fsSL ${MAVEN_URL} | tar -xzC /usr/share/maven --strip-components=1 && \
+    ln -s /usr/share/maven/bin/mvn /usr/bin/mvn
+
+RUN adduser -u 9999 -g 0 quarkus
+USER 9999
+RUN mkdir /home/quarkus/dev/
+WORKDIR /home/quarkus/dev/
+
+COPY pom.xml /home/quarkus/dev/
+COPY src /home/quarkus/dev/src
+COPY mvn-run-dev.sh /home/quarkus/
+
+USER root
+RUN mv /home/quarkus/mvn-run-dev.sh /usr/local/bin && \
+    chmod a+x /usr/local/bin/mvn-run-dev.sh
+
+# adjust permissions to make quarkus dev mode work in openshift
+# https://docs.okd.io/latest/creating_images/guidelines.html#openshift-specific-guidelines
+RUN chgrp -R 0 /home/quarkus && \
+    chmod -R g=u /home/quarkus && \
+    chmod -R a+rwx /home/quarkus && \
+    mkdir -p /.m2/repository && \
+    chgrp -R 0 /.m2/repository && \
+    chmod -R g=u /.m2/repository && \
+    chmod -R a+rwx /.m2/repository && \
+    mkdir -p /tmp/vertx-cache && \
+    chgrp -R 0 /tmp/vertx-cache && \
+    chmod -R g=u /tmp/vertx-cache && \
+    chmod -R a+rwx /tmp/vertx-cache 
+
+USER 9999
+EXPOSE 8080
+
+CMD ["bash", "-c", "/usr/local/bin/mvn-run-dev.sh"]
+

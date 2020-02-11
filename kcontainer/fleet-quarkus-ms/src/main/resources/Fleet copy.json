@@ -1,0 +1,85 @@
+[
+  {
+    "id": "f1",
+    "name": "KC-NorthAtlantic",
+    "ships": [
+      {
+        "name": "BlackBear",
+        "latitude": "37.8044",
+        "longitude": "-122.2711",
+        "status": "Docked",
+        "port": "NYC",
+        "type": "Carrier",
+        "maxRow": 3,
+        "maxColumn": 7,
+         "numberOfContainers" : 17
+      },
+      {
+        "name": "MarieRose",
+        "latitude": "26.10245",
+        "longitude": "29.07359",
+        "status": "AtSea",
+        "type": "Carrier",
+        "maxRow": 4,
+        "maxColumn": 8,
+        "numberOfContainers" : 30
+      },
+      {
+        "name": "SilverChanrock",
+        "latitude": "1.56676",
+        "longitude": "106.24156",
+        "status": "AtSea",
+        "type": "Carrier",
+        "maxRow": 4,
+        "maxColumn": 8,
+        "numberOfContainers" : 30
+      }
+    ]
+   },
+   {
+  	 "id": "f2",
+     "name": "KC-NorthPacific",
+     "ships": [
+       {
+         "name": "JimminyCricket",
+         "latitude": "37.8226902168957",
+         "longitude": "-122.3248956640928",
+         "status": "Docked",
+         "port": "Oackland",
+         "type": "Carrier",
+         "maxRow": 4,
+         "maxColumn": 8,
+         "numberOfContainers" : 21
+      },
+      {
+        "name": "ChangSea",
+        "latitude": "31.065249528470705",
+        "longitude": "121.96742534637453",
+        "status": "AtSea",
+        "type": "Carrier",
+        "maxRow": 4,
+        "maxColumn": 8,
+        "numberOfContainers" : 30
+      },
+      {"name": "BlackBilloute",
+        "latitude": "38.07996",
+        "longitude": "-123.51529",
+        "status": "AtSea",
+        "type": "Carrier",
+        "maxRow": 6,
+        "maxColumn": 8,
+        "numberOfContainers" : 25
+       },
+       {
+         "name": "BlueHorizon",
+         "latitude": "43.05525",
+         "longitude": "-139.62966",
+         "status": "AtSea",
+         "type": "Carrier",
+         "maxRow": 4,
+         "maxColumn": 8,
+         "numberOfContainers" : 30
+        }
+      ]
+    }
+]

@@ -1,0 +1,8 @@
+{
+  "port": 3000,
+  "orderTopicName": "orders",
+  "kafkaEnv": "LOCAL",
+  "kafkaBrokers": "kafka1:9092",
+  "certsPath": "/usr/local/etc/openssl/cert.pem",
+  "version": "0.0.4"
+}

@@ -1,0 +1,31 @@
+apiVersion: messaging.knative.dev/v1alpha1
+kind: Subscription
+metadata:
+  name: ordercommandms-ordercommandevents
+spec:
+  channel:
+    apiVersion: messaging.knative.dev/v1alpha1
+    kind: Channel
+    name: ordercommands
+  subscriber:
+    ref:
+      apiVersion: v1
+      kind: Service
+      name: ordercommandms-service
+    uri: /ordercommandevents
+---
+apiVersion: messaging.knative.dev/v1alpha1
+kind: Subscription
+metadata:
+  name: ordercommandms-orderevents
+spec:
+  channel:
+    apiVersion: messaging.knative.dev/v1alpha1
+    kind: Channel
+    name: orders
+  subscriber:
+    ref:
+      apiVersion: v1
+      kind: Service
+      name: ordercommandms-service
+    uri: /orderevents    

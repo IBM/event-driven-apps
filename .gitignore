@@ -1,0 +1,63 @@
+**/caches
+**/local.properties
+**/.*.swp
+**/.settings/
+**/certificates.der 
+**/clienttruststore
+**/certs/postgresql.crt
+**/.DS_Store
+**/src/main/resources/application-local.properties
+**/src/main/resources/localdev-config.json
+**/target/
+
+# Eclipse
+**/.project
+**/.classpath
+**/.settings/
+**/bin/
+
+# IntelliJ
+**/.idea
+**/*.ipr
+**/*.iml
+**/*.iws
+
+# NetBeans
+**/nb-configuration.xml
+
+# Visual Studio Code
+**/.vscode
+
+# OSX
+**/.DS_Store
+
+# Vim
+**/*.swp
+**/*.swo
+
+# patch
+**/*.orig
+**/*.rej
+
+# Maven
+**/pom.xml.tag
+**/pom.xml.releaseBackup
+**/pom.xml.versionsBackup
+**/pom.xml.next
+**/release.properties
+**/dependency-reduced-pom.xml
+**/buildNumber.properties
+**/.mvn/timing.properties
+**/.mvn/wrapper/maven-wrapper.jar
+**/.flattened-pom.xml
+**/caches
+**/local.properties
+**/.*.swp
+**/.settings/
+**/certificates.der
+**/clienttruststore
+**/certs/postgresql.crt
+**/.DS_Store
+**/src/main/resources/application-local.properties
+**/src/main/resources/localdev-config.json
+**/target/

@@ -1,2 +1,7 @@
 # event-driven-apps
-Provides a set of sample apps that can be used to evaluate event driven middleware such as Knative eventing
+
+Event-Driven application patterns ported on kNative Eventing.
+
+[kContainer](kcontainer/README.md) an Event Driven reference implementation
+based on the [Reefer Container Shipment solution](https://github.com/ibm-cloud-architecture/refarch-kc)  
+

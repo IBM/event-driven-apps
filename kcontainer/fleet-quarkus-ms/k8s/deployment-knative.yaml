@@ -1,0 +1,51 @@
+---
+# Source: fleetms/templates/deployment.yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "fleetms-deployment"
+  labels:
+    chart: 'fleetms-1.0.0'
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: "fleetms-selector"
+        version: "current"
+    spec:
+      serviceAccountName: default
+      containers:
+      - name: "fleetms"
+        image: "us.icr.io/paolo/kc-fleet-ms"
+        imagePullPolicy: IfNotPresent
+        # readinessProbe:
+        #   httpGet:
+        #     path: /health
+        #     port: 9080
+        #   initialDelaySeconds: 20
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "300Mi"
+        env:
+          - name: PORT
+            value: "9080"
+          - name: APPLICATION_NAME
+            value: "fleetms"
+          - name: BLUEWATER_SHIP_ENDPOINT
+            value: http://bluewatership-kn-channel.kcontainer.svc.cluster.local
+          - name: BLUEWATER_CONTAINER_ENDPOINT  
+            value: http://bluewatercontainer-kn-channel.kcontainer.svc.cluster.local  
+          - name: KAFKA_SHIP_TOPIC_NAME
+            value: "bluewaterShip"
+          - name: KAFKA_CONTAINER_TOPIC_NAME
+            value: "bluewaterContainer"
+          - name: KAFKA_BW_PROBLEM_TOPIC_NAME
+            value: "bluewaterProblem"
+          - name: KAFKA_APIKEY
+            valueFrom:
+              secretKeyRef:
+                name: "kcontainer-es"
+                key: api_key

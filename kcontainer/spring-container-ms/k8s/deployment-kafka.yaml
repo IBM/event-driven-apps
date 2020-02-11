@@ -1,0 +1,82 @@
+---
+# Source: springcontainerms/templates/deployment.yaml
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "springcontainerms-deployment"
+  labels:
+    chart: 'springcontainerms-1.0.0'
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: "springcontainerms-selector"
+        version: "current"
+    spec:
+      serviceAccountName: default
+      containers:
+      - name: "springcontainerms"
+        image: "us.icr.io/paolo/kc-spring-container-ms"
+        imagePullPolicy: IfNotPresent
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 20
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "300Mi"
+        env:
+          - name: PORT
+            value: "8080"
+          - name: APPLICATION_NAME
+            value: "springcontainerms"
+          #- name: JKS_LOCATION
+          #  value: "$JAVA_HOME/jre/lib/security/cacerts"
+          - name: KAFKA_BROKERS
+            valueFrom:
+              secretKeyRef:
+                name: "kcontainer-es-kbsf"
+                key: kafka_brokers_sasl_flat
+          - name: KCSOLUTION_CONTAINERS
+            value: "containers"
+          - name: KCSOLUTION_ORDERS
+            value: "orders"
+          - name: KCSOLUTION_REJECTED_ORDERS
+            value: "rejected-orders"
+          - name: KCSOLUTION_ALLOCATED_ORDERS
+            value: "allocated-orders"
+          - name: LOGGING_CONTAINER_MS_ROOT
+            value: "INFO"
+          - name: LOGGING_CONTAINER_MS_CONSUMER_CONFIG
+            value: "ERROR"
+          - name: LOGGING_CONTAINER_MS_PRODUCER_CONFIG
+            value: "ERROR"
+          - name: KAFKA_APIKEY
+            valueFrom:
+              secretKeyRef:
+                name: "kcontainer-es"
+                key: api_key
+          - name: POSTGRESQL_CA_PEM
+            valueFrom:
+              secretKeyRef:
+                name: "postgresql"
+                key: capem
+          - name: POSTGRESQL_URL
+            valueFrom:
+              secretKeyRef:
+                name: "postgresql"
+                key: url
+          - name: POSTGRESQL_USER
+            valueFrom:
+              secretKeyRef:
+                name: "postgresql"
+                key: user
+          - name: POSTGRESQL_PWD
+            valueFrom:
+              secretKeyRef:
+                name: "postgresql"
+                key: password

@@ -1,0 +1,9 @@
+{
+  "productID":"soybean",
+  "quantity":1000,
+  "customerID": "GoodManuf",
+  "expectedDeliveryDate":"2020-02-06T13:30Z",
+  "pickupDate":"2020-01-25T13:30Z",
+  "pickupAddress": {"street": "100 Main street", "city": "Oakland", "country": "USA", "state": "CA", "zipcode": "95053"},
+  "destinationAddress": {"street": "1 a new street", "city": "Shanghai", "country": "China", "state": "NE", "zipcode": "090"}
+}

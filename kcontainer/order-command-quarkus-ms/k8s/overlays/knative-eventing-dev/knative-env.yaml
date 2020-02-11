@@ -1,0 +1,16 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "ordercommandms-deployment"
+spec:
+  template:
+    spec:
+      containers:
+      - name: "ordercommandms"
+        env:
+          - name: ORDER_COMMAND_ENDPOINT
+            value: http://ordercommands-kn-channel.kcontainer.svc.cluster.local
+          - name: ORDER_ENDPOINT
+            value: http://orders-kn-channel.kcontainer.svc.cluster.local  
+          - name: ERROR_ENDPOINT
+            value: http://errors-kn-channel.kcontainer.svc.cluster.local            

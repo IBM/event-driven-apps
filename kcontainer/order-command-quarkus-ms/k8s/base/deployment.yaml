@@ -1,0 +1,26 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "ordercommandms-deployment"
+  labels:
+    chart: 'ordercommandms-1.0.0'
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: "ordercommandms-selector"
+        version: "current"
+    spec:
+      containers:
+      - name: "ordercommandms"
+        image: "us.icr.io/paolo/order-command-ms"
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "300Mi"
+        env:
+          - name: APPLICATION_NAME
+            value: ordercommandms

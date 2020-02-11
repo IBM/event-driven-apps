@@ -1,0 +1,21 @@
+---
+apiVersion: messaging.knative.dev/v1alpha1
+kind: Channel
+metadata:
+  name: containers
+---
+apiVersion: messaging.knative.dev/v1alpha1
+kind: Channel
+metadata:
+  name: orders
+---
+apiVersion: messaging.knative.dev/v1alpha1
+kind: Channel
+metadata:
+  name: errors
+---
+apiVersion: messaging.knative.dev/v1alpha1
+kind: Channel
+metadata:
+  name: ordercommands
+ 
