@@ -1,0 +1,10 @@
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Topic
+metadata:
+  name: containers
+spec:
+  bindingFrom:
+    name: kcontainer-es
+  topicName: containers
+
+

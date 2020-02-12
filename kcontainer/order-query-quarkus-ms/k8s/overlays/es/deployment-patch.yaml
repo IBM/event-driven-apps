@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "orderqueryms-deployment"
+spec:
+  template:
+    spec:
+      containers:
+      - name: "orderqueryms"
+        image: "eventingapps/order-query-ms:1.0.0"
+        imagePullPolicy: Always

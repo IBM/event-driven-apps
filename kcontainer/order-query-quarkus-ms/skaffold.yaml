@@ -1,11 +1,11 @@
-apiVersion: skaffold/v2alpha2
+apiVersion: skaffold/v2alpha3
 kind: Config
 build:
   tagPolicy:
     envTemplate:
       template: "{{.IMAGE_NAME}}"
   artifacts:
-    - image: us.icr.io/paolo/order-query-ms
+    - image: eventingapps/order-query-ms
       context: .
       docker:
         dockerfile: src/main/docker/Dockerfile.dev
@@ -13,7 +13,5 @@ build:
         infer:
           - 'src/**/*.java'
 deploy:
-  kubectl:
-    manifests:
-      - k8s/deployment-knative.yaml
-      - k8s/service.yaml
+  kustomize:
+    paths: ["k8s/overlays/knative-eventing-dev"]

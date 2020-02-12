@@ -1,0 +1,27 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "orderqueryms-deployment"
+  labels:
+    chart: 'orderqueryms-1.0.0'
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  template:
+    metadata:
+      labels:
+        app: "orderqueryms-selector"
+        version: "current"
+    spec:
+      serviceAccountName: default
+      containers:
+      - name: "orderqueryms"
+        image: "eventingapps/order-query-ms"
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+              cpu: "200m"
+              memory: "300Mi"
+        env:
+          - name: APPLICATION_NAME
+            value: orderqueryms  

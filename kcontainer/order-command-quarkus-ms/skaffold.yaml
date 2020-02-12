@@ -15,7 +15,4 @@ build:
 deploy:
   kustomize:
     paths: ["k8s/overlays/knative-eventing-dev"]
-  # kubectl:
-  #   manifests:
-  #     - k8s/deployment-knative.yaml
-  #     - k8s/service.yaml
+ 
