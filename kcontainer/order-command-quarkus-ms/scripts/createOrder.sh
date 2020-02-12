@@ -13,9 +13,9 @@ else
   then
     hostn=$1   
   else
-    hostn="localhost:10080"
+    hostn="localhost:8080"
   fi
-  fname=$PWD/scripts/orderCreate.json
+  fname=$PWD/scripts/orderOacklandToChinaCreate.json
 fi
 
 url="http://$hostn/orders"

@@ -1,0 +1,14 @@
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Service
+metadata:
+  name: kcontainer-es
+spec:
+  plan: standard
+  serviceClass: messagehub
+---
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Binding
+metadata:
+  name: kcontainer-es
+spec:
+  serviceName: kcontainer-es

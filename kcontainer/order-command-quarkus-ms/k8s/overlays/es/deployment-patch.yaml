@@ -7,5 +7,5 @@ spec:
     spec:
       containers:
       - name: "ordercommandms"
-        image: "us.icr.io/paolo/order-command-ms:1.0.0"
+        image: "eventingapps/order-command-ms:1.0.0"
         imagePullPolicy: Always

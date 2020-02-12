@@ -1,0 +1,27 @@
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Topic
+metadata:
+  name: orders
+spec:
+  bindingFrom:
+    name: kcontainer-es
+  topicName: orders
+---
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Topic
+metadata:
+  name: ordercommands
+spec:
+  bindingFrom:
+    name: kcontainer-es
+  topicName: orderCommands  
+---
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Topic
+metadata:
+  name: errors
+spec:
+  bindingFrom:
+    name: kcontainer-es
+  topicName: errors
+

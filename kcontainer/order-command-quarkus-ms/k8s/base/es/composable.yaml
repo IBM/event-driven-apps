@@ -1,0 +1,21 @@
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Composable
+metadata:
+  name: kcontainer-es-kbsf
+spec:
+  template:
+    apiVersion: v1
+    data:
+      kafka_brokers_sasl_flat:
+        getValueFrom:
+          format-transformers:
+          - Base64ToString
+          - JsonToObject
+          - ArrayToCSString
+          - StringToBase64
+          kind: Secret
+          name: kcontainer-es
+          path: '{.data.kafka_brokers_sasl}'
+    kind: Secret
+    metadata:
+      name: kcontainer-es-kbsf
