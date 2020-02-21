@@ -1,11 +1,11 @@
-apiVersion: skaffold/v2alpha2
+apiVersion: skaffold/v2alpha3
 kind: Config
 build:
   tagPolicy:
     envTemplate:
       template: "{{.IMAGE_NAME}}"
   artifacts:
-    - image: us.icr.io/paolo/kc-voyages-ms
+    - image: eventingapps/voyage-ms
       context: .
       docker:
         dockerfile: Dockerfile.dev
@@ -14,7 +14,5 @@ build:
           - 'server/**/*.js'
           - 'server/**/*.json'
 deploy:
-  kubectl:
-    manifests:
-      - k8s/deployment-knative.yaml
-      - k8s/service.yaml
+ kustomize:
+    paths: ["k8s/overlays/knative-eventing-dev"]
