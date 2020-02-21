@@ -1,0 +1,12 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "voyagesms-deployment"
+spec:
+  template:
+    spec:
+      containers:
+      - name: "voyagesms"
+        env:
+          - name: ORDER_ENDPOINT
+            value: http://orders-kn-channel.kcontainer.svc.cluster.local   

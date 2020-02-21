@@ -1,0 +1,11 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "voyagesms-deployment"
+spec:
+  template:
+    spec:
+      containers:
+      - name: "voyagesms"
+        image: "eventingapps/voyage-ms:1.0.0"
+        imagePullPolicy: Always
