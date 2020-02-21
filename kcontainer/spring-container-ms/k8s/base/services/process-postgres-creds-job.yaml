@@ -1,0 +1,46 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: default-read
+rules:
+- apiGroups: [""]
+  resources: ["secrets"]
+  verbs: ["get", "list", "watch", "create", "update", "patch", "delete"] 
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1beta1
+metadata:
+  name: default-read-binding
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: kcontainer
+roleRef:
+  kind: Role
+  name: default-read
+  apiGroup: ""
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: process-postgres-creds
+spec:
+  ttlSecondsAfterFinished: 30
+  template:
+    spec:
+      containers:
+        - name: setenv
+          image: eventingapps/kubectljq
+          command: ["/bin/sh","-c"]
+          args: 
+            - while :; do kubectl get secret/kcontainer-postgresql >/dev/null 2>&1; if [ $? -eq 0 ];then break;fi; sleep 1; done;
+              JSON=$(kubectl get secret kcontainer-postgresql -o jsonpath="{.data.connection}" | base64 --decode);
+              USERNAME=$(echo $JSON | jq -r '.postgres.authentication.username');
+              PASSWORD=$(echo $JSON | jq -r '.postgres.authentication.password');
+              HOST=$(echo $JSON | jq -r '.postgres.hosts[0].hostname');
+              PORT=$(echo $JSON | jq -r '.postgres.hosts[0].port');
+              URLPATH=$(echo $JSON | jq -r '.postgres.path');
+              URL=jdbc:postgresql://$HOST:$PORT$URLPATH;
+              kubectl create secret generic postgresql --from-literal=url=$URL --from-literal=user=$USERNAME --from-literal=password=$PASSWORD --dry-run -o yaml | kubectl apply -f -
+      restartPolicy: Never
+  backoffLimit: 4

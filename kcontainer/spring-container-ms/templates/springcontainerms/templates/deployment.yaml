@@ -4,8 +4,6 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: "springcontainerms-deployment"
-  labels:
-    chart: 'springcontainerms-1.0.0'
 spec:
   replicas: 1
   revisionHistoryLimit: 1

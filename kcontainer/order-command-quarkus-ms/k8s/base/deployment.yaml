@@ -2,8 +2,6 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: "ordercommandms-deployment"
-  labels:
-    chart: 'ordercommandms-1.0.0'
 spec:
   replicas: 1
   revisionHistoryLimit: 1

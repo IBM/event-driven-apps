@@ -1,0 +1,36 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: "springcontainerms-deployment"
+spec:
+  template:
+    spec:
+      containers:
+      - name: "springcontainerms"
+        env:
+          - name: KAFKA_BROKERS
+            valueFrom:
+              secretKeyRef:
+                name: "kcontainer-es-kbsf"
+                key: kafka_brokers_sasl_flat
+          - name: KCSOLUTION_CONTAINERS
+            value: "containers"
+          - name: KCSOLUTION_ORDERS
+            value: "orders"
+          - name: KCSOLUTION_REJECTED_ORDERS
+            value: "rejected-orders"
+          - name: KCSOLUTION_ALLOCATED_ORDERS
+            value: "allocated-orders"
+          - name: LOGGING_CONTAINER_MS_ROOT
+            value: "INFO"
+          - name: LOGGING_CONTAINER_MS_CONSUMER_CONFIG
+            value: "ERROR"
+          - name: LOGGING_CONTAINER_MS_PRODUCER_CONFIG
+            value: "ERROR"
+          - name: KAFKA_APIKEY
+            valueFrom:
+              secretKeyRef:
+                name: "kcontainer-es"
+                key: api_key
+    
+        

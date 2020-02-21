@@ -29,22 +29,11 @@ RUN bash -c " export POSTGRESQL_URL=${POSTGRESQL_URL} \
 
 # Deploy stage
 # Use jre small foot print image. See https://hub.docker.com/_/ibmjava/
-# FROM ibmjava:8-sfj as runner
-
 FROM openjdk:8u181-jdk as runner
 ENV APP_HOME=/app
 COPY --from=builder /usr/src/app/target/SpringContainerMS-1.0-SNAPSHOT.jar $APP_HOME/app.jar
 LABEL maintainer="IBM Java Engineering at IBM Cloud"
 
-ENV POSTGRESQL_URL=""
-ENV POSTGRESQL_USER=""
-ENV POSTGRESQL_PWD=""
-ENV KAFKA_BROKERS=""
-ENV KAFKA_APIKEY=""
-ENV POSTGRESQL_CA_PEM=""
-ENV ES_CA_PEM=""
-ENV JKS_LOCATION=""
-ENV TRUSTSTORE_PWD="changeit"
 # Install Extra Packages
 RUN apt-get update \
  && apt-get install -y jq bash bc ca-certificates curl \
@@ -55,8 +44,6 @@ WORKDIR $APP_HOME
 
 COPY scripts/startup.sh startup.sh
 COPY scripts/add_certificates.sh scripts/
-
-ENV JAVA_OPTS=""
 
 EXPOSE 8080:8080
 ENTRYPOINT ["./startup.sh"]
