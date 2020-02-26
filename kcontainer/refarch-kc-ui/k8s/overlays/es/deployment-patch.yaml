@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "kc-ui"
+spec:
+  template:
+    spec:
+      containers:
+      - name: "kc-ui"
+        image: "eventingapps/kcontainer-ui:1.0.0"
+        imagePullPolicy: Always

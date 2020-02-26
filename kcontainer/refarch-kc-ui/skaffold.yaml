@@ -1,0 +1,18 @@
+apiVersion: skaffold/v2alpha3
+kind: Config
+build:
+  tagPolicy:
+    envTemplate:
+      template: "{{.IMAGE_NAME}}"
+  artifacts:
+    - image: eventingapps/kcontainer-ui
+      context: .
+      docker:
+        dockerfile: Dockerfile.dev
+      sync:
+        infer:
+          - 'server/**/*.js'
+          - 'server/**/*.json'
+deploy:
+  kustomize:
+    paths: ["k8s/overlays/knative-eventing-dev"]

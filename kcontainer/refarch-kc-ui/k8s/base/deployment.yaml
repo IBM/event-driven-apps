@@ -1,6 +1,4 @@
----
-# Source: kc-ui/templates/deployment.yaml
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: kc-ui
@@ -20,8 +18,8 @@ spec:
       serviceAccountName: default
       containers:
       - name: "kc-ui"
-        image: "us.icr.io/paolo/kcontainer-ui:latest"
-        imagePullPolicy: Always
+        image: "eventingapps/kcontainer-ui"
+        imagePullPolicy: IfNotPresent
         livenessProbe:
           httpGet:
             path: /healthz
@@ -42,30 +40,20 @@ spec:
           - name: FLEETMS_SERVICE_HOST
             value: "fleetms-service"
           - name: FLEETMS_SERVICE_PORT
-            value: "9080"
+            value: "80"
           - name: ORDERCOMMANDMS_SERVICE_HOST
             value: "ordercommandms-service"
           - name: ORDERCOMMANDMS_SERVICE_PORT
-            value: "9080"
+            value: "80"
           - name: ORDERQUERYMS_SERVICE_HOST
             value: "orderqueryms-service"
           - name: ORDERQUERYMS_SERVICE_PORT
-            value: "9080"
+            value: "80"
+          - name: CONTAINERMS_SERVICE_HOST
+            value: "springcontainerms-service"            
+          - name: CONTAINERMS_SERVICE_PORT
+            value: "80"  
           - name: VOYAGESMS_SERVICE_HOST
             value: "voyagesms-service"
           - name: VOYAGESMS_SERVICE_PORT
-            value: "3000"
-          - name: KAFKA_BROKERS
-            valueFrom:
-              secretKeyRef:
-                name: "kcontainer-es-kbsf"
-                key: kafka_brokers_sasl_flat
-          - name: PROBLEM_TOPIC
-            value: "bluewaterProblem"
-          - name: SHIP_TOPIC
-            value: "bluewaterShip"
-          - name: KAFKA_APIKEY
-            valueFrom:
-              secretKeyRef:
-                name: "kcontainer-es"
-                key: api_key   
+            value: "80"

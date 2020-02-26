@@ -25,7 +25,7 @@ RUN bash -c " export POSTGRESQL_URL=${POSTGRESQL_URL} \
 	&& export JKS_LOCATION=\"/usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/cacerts\" \
 	&& export TRUSTSTORE_PWD=${TRUSTSTORE_PWD} \
 	&& ./scripts/add_certificates.sh \
-	&& mvn clean install -DskipITs -Djavax.net.ssl.trustStore=${JAVA_HOME}/jre/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=$TRUSTSTORE_PWD -Duser.home=/var/maven"
+	&& mvn clean install -DskipTests -Djavax.net.ssl.trustStore=${JAVA_HOME}/jre/lib/security/cacerts -Djavax.net.ssl.trustStorePassword=$TRUSTSTORE_PWD -Duser.home=/var/maven"
 
 # Deploy stage
 # Use jre small foot print image. See https://hub.docker.com/_/ibmjava/
@@ -36,7 +36,7 @@ LABEL maintainer="IBM Java Engineering at IBM Cloud"
 
 # Install Extra Packages
 RUN apt-get update \
- && apt-get install -y jq bash bc ca-certificates curl \
+ && apt-get install -y jq bash bc ca-certificates curl nodejs \
  && update-ca-certificates \
  && mkdir -p $APP_HOME/scripts
 

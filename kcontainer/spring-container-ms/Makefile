@@ -16,6 +16,12 @@ build-docker:
 push-docker:
 	docker push ${IMG}:${TAG}
 
+build-docker-tools:
+	docker build -t eventingapps/container-cli -f scripts/containers-cli/Dockerfile scripts/containers-cli
+
+push-docker-tools:
+	docker push eventingapps/container-cli
+
 # Run locally
 run:
 	mvn compile exec:java -Dexec.mainClass="ibm.labs.kc.containermgr.SBApplication"

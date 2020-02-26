@@ -1,10 +1,13 @@
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: "springcontainerms-deployment"
 spec:
   replicas: 1
   revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: springcontainerms-selector
   template:
     metadata:
       labels:

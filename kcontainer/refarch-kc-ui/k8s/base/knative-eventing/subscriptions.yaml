@@ -1,7 +1,7 @@
 apiVersion: messaging.knative.dev/v1alpha1
 kind: Subscription
 metadata:
-  name: fleetms-bluewatershipevents
+  name: refarch-kc-bluewatership
 spec:
   channel:
     apiVersion: messaging.knative.dev/v1alpha1
@@ -11,21 +11,23 @@ spec:
     ref:
       apiVersion: v1
       kind: Service
-      name: fleetms-service
-    uri: /bluewatershipevents
----    
+      name: kc-ui-service
+    uri: /api/bluewatershipevents
+---
 apiVersion: messaging.knative.dev/v1alpha1
 kind: Subscription
 metadata:
-  name: fleetms-bluewatercontainerevents
+  name: refarch-kc-bluewaterproblem
 spec:
   channel:
     apiVersion: messaging.knative.dev/v1alpha1
     kind: Channel
-    name: bluewatercontainer
+    name: bluewaterproblem
   subscriber:
     ref:
       apiVersion: v1
       kind: Service
-      name: fleetms-service
-    uri: /bluewatercontainerevents 
+      name: kc-ui-service
+    uri: /api/bluewaterproblemevents      
+
+ 

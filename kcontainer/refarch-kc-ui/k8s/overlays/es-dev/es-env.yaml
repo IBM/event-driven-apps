@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "kc-ui"
+spec:
+  template:
+    spec:
+      containers:
+      - name: "kc-ui"
+        env:
+          - name: KAFKA_BROKERS
+            valueFrom:
+              secretKeyRef:
+                name: "kcontainer-es-kbsf"
+                key: kafka_brokers_sasl_flat
+          - name: KAFKA_APIKEY
+            valueFrom:
+              secretKeyRef:
+                name: "kcontainer-es"
+                key: api_key                   
+          - name: PROBLEM_TOPIC
+            value: "bluewaterProblem"
+          - name: SHIP_TOPIC
+            value: "bluewaterShip"
+        
+    
+        

@@ -5,7 +5,7 @@
 const config = require('./config.json');
 
 export default class AppConfig {
-  
+
     constructor() {}
 
     public getKafkaBrokers(): string {
@@ -20,7 +20,7 @@ export default class AppConfig {
         var url = config.fleetMSURL;
         if(process.env.FLEETMS_SERVICE_HOST && process.env.FLEETMS_SERVICE_PORT){
           url = "http://" + process.env.FLEETMS_SERVICE_HOST
-              + ":" + process.env.FLEETMS_SERVICE_PORT + "/fleetms";
+              + ":" + process.env.FLEETMS_SERVICE_PORT;
         }
         return url;
     }
@@ -93,7 +93,7 @@ export default class AppConfig {
         var kafka_api_key = process.env.KAFKA_APIKEY.trim();
         return ('KAFKA_APIKEY' in process.env && kafka_api_key !=="");
     }
-    
+
     public eventStreamsSecurityEnabled(): boolean {
         return ('KAFKA_CERT_PATH' in process.env);
     }
