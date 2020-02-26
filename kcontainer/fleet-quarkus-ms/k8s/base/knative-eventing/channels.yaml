@@ -1,0 +1,16 @@
+---
+apiVersion: messaging.knative.dev/v1alpha1
+kind: Channel
+metadata:
+  name: bluewatership
+---
+apiVersion: messaging.knative.dev/v1alpha1
+kind: Channel
+metadata:
+  name: bluewatercontainer
+---
+apiVersion: messaging.knative.dev/v1alpha1
+kind: Channel
+metadata:
+  name: bluewaterproblem
+

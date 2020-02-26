@@ -1,0 +1,11 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "fleetms-deployment"
+spec:
+  template:
+    spec:
+      containers:
+      - name: "fleetms"
+        image: "eventingapps/fleet-ms:1.0.0"
+        imagePullPolicy: Always

@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "fleetms-deployment"
+spec:
+  replicas: 1
+  revisionHistoryLimit: 1
+  selector:
+    matchLabels:
+      app: fleetms-selector
+  template:
+    metadata:
+      labels:
+        app: "fleetms-selector"
+        version: "current"
+    spec:
+      serviceAccountName: default
+      containers:
+      - name: "fleetms"
+        image: eventingapps/fleet-ms
+        imagePullPolicy: IfNotPresent
+        resources:
+          requests:
+            cpu: "200m"
+            memory: "300Mi"
+        env:
+          - name: APPLICATION_NAME
+            value: "fleetms"

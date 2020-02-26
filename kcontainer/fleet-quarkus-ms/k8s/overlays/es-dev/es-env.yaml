@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: "fleetms-deployment"
+spec:
+  template:
+    spec:
+      containers:
+      - name: "fleetms"
+        env:
+        - name: KAFKA_BROKERS
+          valueFrom:
+            secretKeyRef:
+              name: "kcontainer-es-kbsf"
+              key: kafka_brokers_sasl_flat
+        - name: KAFKA_SHIP_TOPIC_NAME
+          value: "bluewaterShip"
+        - name: KAFKA_CONTAINER_TOPIC_NAME
+          value: "bluewaterContainer"
+        - name: KAFKA_BW_PROBLEM_TOPIC_NAME
+          value: "bluewaterProblem"
+        - name: KAFKA_APIKEY
+          valueFrom:
+            secretKeyRef:
+              name: "kcontainer-es"
+              key: api_key
+    
+        

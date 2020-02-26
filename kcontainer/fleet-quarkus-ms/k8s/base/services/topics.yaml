@@ -1,0 +1,17 @@
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Topic
+metadata:
+  name: bluewatership
+spec:
+  bindingFrom:
+    name: kcontainer-es
+  topicName: bluewaterShip
+---
+apiVersion: ibmcloud.ibm.com/v1alpha1
+kind: Topic
+metadata:
+  name: bluewatercontainer
+spec:
+  bindingFrom:
+    name: kcontainer-es
+  topicName: bluewaterContainer
