@@ -1,5 +1,5 @@
 {
-  "kafkaBrokers" : "kafka1:9092",
+  "kafkaBrokers" : "",
   "kafkaConnectTimeout" : 15000,
   "kafkaGroupId": "kc-dashboard-group",
   "port": 3010,

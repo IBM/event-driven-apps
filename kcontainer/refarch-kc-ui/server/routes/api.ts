@@ -29,7 +29,10 @@ const orderClient = new OrderClient();
 const fleetClient = new FleetClient();
 const shipmentClient = new ShipmentClient();
 const containerClient = new ContainerClient();
-
+import AppConfig from   '../config/AppConfig';
+var config = new AppConfig();
+var shipPosData: Array<any> = [];
+var probData: Array<any> = [];
 
 async function delay(ms: number) {
     return new Promise(resolve => setTimeout(resolve, ms));
@@ -50,38 +53,96 @@ module.exports = function (app: any) {
     // api polled from UI to get potential problem on ships
     app.get('/api/problem', (req: any, res: any) => {
         console.log("In api problem topic consumer");
-        const kafkaConsumer = new KafkaConsumer();
+            if (config.getKafkaBrokers() != "") {
+                console.log("using Kafka consumer for problem data");
+                const kafkaConsumer = new KafkaConsumer();
 
-        async function wait() {
-            await delay(10000);
+                async function wait() {
+                    await delay(10000);
+                }
+
+                var problemData = kafkaConsumer.problemsConsumer();
+
+                wait().then(() => {
+                    console.log("data is old " + problemData);
+                    res.status(200).send(problemData);
+                }).catch((error) => {
+                    console.log(error);
+            });
+        } else {
+            var problemData: Array<any> = [];
+            console.log("Using REST Consumer for problem data");
+            async function wait() {
+                await delay(10000);
+            }
+            while(probData.length){
+                var value = probData.shift();
+                problemData.push(value);
+            }
+            wait().then(() => {
+                console.log("Sending ship problem data: "+JSON.stringify(problemData, null, 2));
+                res.status(200).send(problemData);
+            }).catch((error) => {
+                console.log(error);
+            });
         }
-
-        var problemData = kafkaConsumer.problemsConsumer();
-
-        wait().then(() => {
-            console.log("data is old " + problemData);
-            res.status(200).send(problemData);
-        }).catch((error) => {
-            console.log(error);
-        });
     });
+
+
+    // api to receive ship position events
+    app.post('/api/bluewatershipevents', (req: any, res: any) => {
+        console.log("Received a ship event via REST consumer");
+        if (req.body !== undefined) {
+            console.log("Ship event: "+JSON.stringify(req.body, null, 2));
+            shipPosData.push(req.body);
+        }         
+    });
+
+    // api to receive problem events
+    app.post('/api/bluewaterproblemevents', (req: any, res: any) => {
+        console.log("Received a ship problem event via REST consumer");
+        if (req.body !== undefined) {
+            console.log("Problem event: "+JSON.stringify(req.body, null, 2));
+            probData.push(req.body);
+        }    
+    });
+
 
     // api polled from UI to get ship position
     app.get('/api/shipposition', (req: any, res: any) => {
         console.log("In api ship position topic consumer");
 
-        const kafkaConsumer = new KafkaConsumer();
-        async function wait() {
-            await delay(10000);
+        if (config.getKafkaBrokers() != "") {
+            console.log("Using Kafka Consumer for ship events");
+            const kafkaConsumer = new KafkaConsumer();
+            async function wait() {
+                await delay(10000);
+            }
+
+            var shipPositionData = kafkaConsumer.kafkaShipPosition();
+        
+            wait().then(() => {
+                res.status(200).send(shipPositionData);
+            }).catch((error) => {
+                console.log(error);
+            });
+        } else {
+            var shipPositionData: Array<any> = [];
+            console.log("Using REST Consumer for ship events");
+            async function wait() {
+                await delay(10000);
+            }
+            while(shipPosData.length){
+                var value = shipPosData.shift();
+                shipPositionData.push(value);
+            }
+            wait().then(() => {
+                console.log("Sending ship positioon data: "+JSON.stringify(shipPositionData, null, 2));
+                res.status(200).send(shipPositionData);
+            }).catch((error) => {
+                console.log(error);
+            });
         }
-
-        var shipPositionData = kafkaConsumer.kafkaShipPosition();
-
-        wait().then(() => {
-            res.status(200).send(shipPositionData);
-        }).catch((error) => {
-            console.log(error);
-        });
     });
 
     // get the list of fleets
