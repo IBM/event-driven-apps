@@ -13,6 +13,7 @@ build-docker:
 
 # Push docker image
 push-docker:
+	echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 	docker push ${IMG}:${TAG}
 
 # Run locally
