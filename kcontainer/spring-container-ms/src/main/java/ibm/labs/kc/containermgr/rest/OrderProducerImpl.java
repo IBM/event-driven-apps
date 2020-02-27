@@ -29,7 +29,7 @@ public class OrderProducerImpl implements OrderProducer {
 	List<OrderEvent> eventsSent;
 
 	public OrderProducerImpl() {
-		LOG.info("Using REST implementation.");
+		LOG.info("Using REST implementation:");
 		Client client = ClientBuilder.newClient();
 		if (System.getenv("ORDER_ENDPOINT")!=null){
 			target = client.target(System.getenv("ORDER_ENDPOINT"));
