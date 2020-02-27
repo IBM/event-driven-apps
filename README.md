@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.com/IBM/event-driven-apps.svg?branch=master)](https://travis-ci.com/IBM/event-driven-apps)
 # event-driven-apps
 
 Event-Driven application patterns ported on kNative Eventing.
