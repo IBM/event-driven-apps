@@ -11,7 +11,7 @@ script:
   - echo "to be done"
 
 after_success:
-  - test "$TRAVIS_EVENT_TYPE" != "pull_request" && make build-changed || echo "success"
+  - test "$TRAVIS_EVENT_TYPE" != "pull_request" && cd kcontainer && make build-changed || echo "success"
 
 #  build only master and tagged/branch releases.
 branches:
@@ -24,7 +24,7 @@ branches:
 deploy:
   skip_cleanup: true
   provider: script
-  script: bash -c "make push-changed"
+  script: bash -c "cd kcontainer && make push-changed"
   on:
     all_branches: true
     condition: $TRAVIS_BRANCH =~ ^master|[0-9]+\..*|v[0-9]+\..*|release-[0-9]+\..*$
