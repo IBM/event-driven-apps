@@ -14,12 +14,14 @@ build-docker:
 
 # Push docker image
 push-docker:
+	echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 	docker push ${IMG}:${TAG}
 
 build-docker-tools:
 	docker build -t eventingapps/container-cli -f scripts/containers-cli/Dockerfile scripts/containers-cli
 
 push-docker-tools:
+	echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
 	docker push eventingapps/container-cli
 
 # Run locally
