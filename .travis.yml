@@ -24,7 +24,7 @@ branches:
 deploy:
   skip_cleanup: true
   provider: script
-  script: bash -c "cd kcontainer && make push-changed"
+  script: bash -c "make push-changed"
   on:
     all_branches: true
     condition: $TRAVIS_BRANCH =~ ^master|[0-9]+\..*|v[0-9]+\..*|release-[0-9]+\..*$
