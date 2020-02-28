@@ -1,0 +1,102 @@
+#!/usr/bin/env node
+const yargs = require("yargs");
+const axios = require("axios");
+
+const command = yargs.command('create <n>', 'create n new random orders', (yargv) => { 
+    yargv.positional('n', {
+      describe: 'number of orders to create',
+      type: 'int'
+    })
+   })
+   .command('list', 'list all orders', (yargv) => {
+   })  
+  .demandCommand()
+  .help()
+  .argv
+
+  switch (command._[0]) {
+    case 'create':
+        url = getOrderServiceURL();
+        console.log('creating orders at '+url); 
+        createOrders(command.n,url)
+        break;
+    case 'list':
+        url = getOrderQueryServiceURL();
+        console.log('listing orders at '+url); 
+        listOrders(url,0);
+        break;    
+  }       
+
+  function createOrders(n, url) {
+    var addresses = [ 
+                    {"street": "100 Main street", "city": "Oakland", "country": "USA", "state": "CA", "zipcode": "94501"},
+                    {"street": "150 Meilong Road", "city": "Shanghai", "country": "China", "state": "", "zipcode": "200237"},
+                    {"street": "476 9th Ave", "city": "NYC", "country": "USA", "state": "NY", "zipcode": "10018"},
+                    {"street": "27-28, Rail Arch, New Mill Rd, Nine Elms", "city": "London", "country": "United Kingdom", "state": "", "zipcode": "SW8 5PP"},
+                    {"street": "1628, 2095 Jerrold Ave", "city": "San Francisco", "country": "USA", "state": "CA", "zipcode": "94124"}
+                    ];
+    var manuf = ['GoodManuf','OtherManuf'];
+    var products = ['Fresh product 1','Medical vaccin','Carrot','Fresh Product'];
+    // use a pickup date 3 days from now
+    var currentDate = new Date();
+    var pickupDate = new Date(currentDate.setTime( currentDate.getTime() + 3 * 86400000 )).toISOString();
+    // use a delivery date 20 days from the pickup day (23 days)
+    var expectedDeliveryDate = new Date(currentDate.setTime( currentDate.getTime() + 23 * 86400000 )).toISOString();
+
+    for (var i = 0; i < n ; i++) {
+      // get a random index for pickup location
+      pickupIndex = Math.round(Math.random() * addresses.length);
+      // get a random index for delivery location - and ensure not the same index of pickup
+      deliveryIndex = Math.round(Math.random() * addresses.length);
+      while (pickupIndex == deliveryIndex){
+        deliveryIndex = Math.round(Math.random() * addresses.length);
+      }
+      // get random indexes for the other arrays
+      manufIndex = Math.round(Math.random() * manuf.length);
+      prodIndex = Math.round(Math.random() * products.length);
+      // build order
+      var order = {
+        productID: products[prodIndex],
+        quantity: 1000,
+        customerID: manuf[manufIndex],
+        expectedDeliveryDate: expectedDeliveryDate,
+        pickupDate: pickupDate,
+        pickupAddress: addresses[pickupIndex],
+        destinationAddress: addresses[deliveryIndex]
+      }
+
+      console.log(order);
+      axios({method: 'post',url: url, data: order});  
+    }
+  }
+   
+  function listOrders(url) {
+    axios.get(url)
+      .then(function (response) {
+      console.log(response.data);
+      })
+    .catch(function (error) {
+    console.log(error);
+    })
+    .then(function () {
+    });
+  }
+
+  function getOrderServiceURL(){
+    var url = process.env.ORDER_SERVICE_URL;
+    if ( url == null || url == ""){
+      url = 'http://ordercommandms-service/orders'
+      console.log('ORDER_SERVICE_URL not defined. Falling back to: '+url)
+    }
+    return url
+  }
+
+  function getOrderQueryServiceURL(){
+    var url = process.env.ORDER_QUERY_SERVICE_URL;
+    if ( url == null || url == ""){
+      url = 'http://orderqueryms-service/orders'
+      console.log('ORDER_QUERY_SERVICE_URL not defined. Falling back to: '+url)
+    }
+    return url
+  }
+  
