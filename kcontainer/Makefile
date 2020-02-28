@@ -61,4 +61,11 @@ push-changed:
     fi	
 	@if [ "${voyages-changed}" = "changed" ]; then\
         cd voyages-ms; make push-docker; cd ..;\
-    fi		
+    fi
+
+build-docker-tools:
+	docker build -t eventingapps/cli -f utils/cli/Dockerfile utils/cli
+
+push-docker-tools:
+	echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+	docker push eventingapps/cli

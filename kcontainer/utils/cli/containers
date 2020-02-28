@@ -1,28 +1,16 @@
 #!/usr/bin/env node
-
 const yargs = require("yargs");
 const axios = require("axios");
 
-const command = yargs.command('create <n> <url>', 'create n containers for each city', (yargv) => { 
+const command = yargs.command('create <n>', 'create n containers for each city', (yargv) => { 
     yargv.positional('n', {
       describe: 'number of containers for city to create',
       type: 'int'
-    }).positional('url', {
-      describe: 'URL to containers service',
-      type: 'string'
     })
-  })
-  .command('delete-all <url>', 'delete all container', (yargv) => {
-    yargv.positional('url', {
-      describe: 'URL to containers service',
-      type: 'string'
-    })
+   })
+  .command('delete-all', 'delete all container', (yargv) => {
    })  
-   .command('list <url>', 'list all container', (yargv) => {
-    yargv.positional('url', {
-      describe: 'URL to containers service',
-      type: 'string'
-    })
+   .command('list', 'list all container', (yargv) => {
    })  
   .demandCommand()
   .help()
@@ -30,15 +18,19 @@ const command = yargs.command('create <n> <url>', 'create n containers for each 
 
   switch (command._[0]) {
     case 'create':
-        createContainers(command.n,command.url)
+        url = getURL();
+        console.log('creating all container at '+url); 
+        createContainers(command.n,url)
         break;
     case 'delete-all':
-        console.log('deleting all container at '+command.url); 
-        deleteAllContainers(command.url);
+        url = getURL();
+        console.log('deleting all container at '+url); 
+        deleteAllContainers(url);
         break;
     case 'list':
-        console.log('listing all container at '+command.url); 
-        listAllContainers(command.url,0);
+        url = getURL();
+        console.log('listing all container at '+url); 
+        listAllContainers(url,0);
         break;    
   }       
 
@@ -54,8 +46,6 @@ const command = yargs.command('create <n> <url>', 'create n containers for each 
     cities.push({ lat: 37.8044, lon: -122.2712 });
     // Shanghai
     cities.push({ lat: 31.323246, lon: 121.562938 });
-    // NYC
-    cities.push({ lat: 40.625289, lon: -73.995350 });
     // NYC
     cities.push({ lat: 40.625289, lon: -73.995350 });
      // London
@@ -123,7 +113,17 @@ const command = yargs.command('create <n> <url>', 'create n containers for each 
     .then(function () {
     // always executed
     });
-
   }
 
+  /**
+   * check URL
+   */
+  function getURL(){
+    var url = process.env.CONTAINER_SERVICE_URL
+    if ( url == null || url == ""){
+      url = 'http://springcontainerms-service/containers'
+      console.log('CONTAINER_SERVICE_URL not defined. Falling back to: '+url)
+    }
+    return url
+  }
   

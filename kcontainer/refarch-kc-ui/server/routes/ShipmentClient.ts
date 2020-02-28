@@ -46,13 +46,13 @@ export default class ShipmentClient {
  
     public getVoyages(): Observable<orderDomain.Voyage[]> {
         let voyages: orderDomain.Voyage[] = [
-            {voyageID:"voyage14", status: "Scheduled", startPort: "Oackland",
+            {voyageID:"voyage14", status: "Scheduled", startPort: "Oakland",
             startDate: "01/20/2019",
             endPort: "Shangai",
             endDate: "02/15/2019"},
             {voyageID:"voyage15",
             status: "Scheduled",
-            startPort: "Oackland",
+            startPort: "Oakland",
             startDate: "01/30/2019",
             endPort: "Shangai",
             endDate: "02/25/2019"}  
@@ -61,7 +61,7 @@ export default class ShipmentClient {
     }
 
     public getVoyage(voyageID: string): Observable<orderDomain.Voyage> {
-        return of({voyageID:voyageID,status: "Booked", startPort: "Oackland",
+        return of({voyageID:voyageID,status: "Booked", startPort: "Oakland",
         startDate: "01/20/2019",
         endPort: "Shangai",
         endDate: "02/15/2019"})
