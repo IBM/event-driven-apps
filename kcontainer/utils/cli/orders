@@ -27,7 +27,7 @@ const command = yargs.command('create <n>', 'create n new random orders', (yargv
         break;    
   }       
 
-  function createOrders(n, url) {
+  async function createOrders(n, url) {
     var addresses = [ 
                     {"street": "100 Main street", "city": "Oakland", "country": "USA", "state": "CA", "zipcode": "94501"},
                     {"street": "150 Meilong Road", "city": "Shanghai", "country": "China", "state": "", "zipcode": "200237"},
@@ -45,15 +45,15 @@ const command = yargs.command('create <n>', 'create n new random orders', (yargv
 
     for (var i = 0; i < n ; i++) {
       // get a random index for pickup location
-      pickupIndex = Math.round(Math.random() * addresses.length);
+      pickupIndex = Math.floor(Math.random() * addresses.length);
       // get a random index for delivery location - and ensure not the same index of pickup
-      deliveryIndex = Math.round(Math.random() * addresses.length);
+      deliveryIndex = Math.floor(Math.random() * addresses.length);
       while (pickupIndex == deliveryIndex){
-        deliveryIndex = Math.round(Math.random() * addresses.length);
+        deliveryIndex = Math.floor(Math.random() * addresses.length);
       }
       // get random indexes for the other arrays
-      manufIndex = Math.round(Math.random() * manuf.length);
-      prodIndex = Math.round(Math.random() * products.length);
+      manufIndex = Math.floor(Math.random() * manuf.length);
+      prodIndex = Math.floor(Math.random() * products.length);
       // build order
       var order = {
         productID: products[prodIndex],
@@ -65,8 +65,8 @@ const command = yargs.command('create <n>', 'create n new random orders', (yargv
         destinationAddress: addresses[deliveryIndex]
       }
 
-      console.log(order);
-      axios({method: 'post',url: url, data: order});  
+      const status = await postOrder(url, order);
+      console.log(status); 
     }
   }
    
@@ -100,3 +100,10 @@ const command = yargs.command('create <n>', 'create n new random orders', (yargv
     return url
   }
   
+  async function postOrder(url, order) {
+    return axios({
+      method: "post",
+      url: url,
+      data: order
+    }).then(res => res.data);
+  }
