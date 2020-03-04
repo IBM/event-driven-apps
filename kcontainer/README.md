@@ -9,15 +9,12 @@ Component View:
 ![alt text](https://ibm-cloud-architecture.github.io/refarch-kc/design/kc-hl-comp-view.png "Component View")
 
 
-# Quick Start
+## Installing
 
-Deploy for Knative with:
+Follow [these installation instructions](docs/installing.md)
 
-```
-make deploy-on-knative
-```
+## Running Scenarios
 
-Go to UI and login with user `eddie@email.com` and password `passw0rd`.
-
+Follow [these instructions](docs/running-scenario.md)
 
 
