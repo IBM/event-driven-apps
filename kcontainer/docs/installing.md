@@ -20,6 +20,10 @@ kubectl create ns kcontainer
 
 Please note that the minimum version required: is v1.15.10.
 
+Note also that you will need enough CPU capacity in your cluster, thus you should use a paid IKS cluster
+or a minikube with enough CPU/mem allocated. The free IKS cluster ends up running out of CPU for scheduling the
+pods.
+
 Install Operator Lifecycle Manager (OLM), so that we can install all the community operators from OperatorHub:
 
 ```shell
