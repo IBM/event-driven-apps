@@ -232,7 +232,7 @@ kubectl get bindings kcontainer-postgresql
 service will be fully active when the status becomes `Online`.
 
 
-# Troubleshoot
+# Troubleshooting
 
 ## RBAC Fix
 
