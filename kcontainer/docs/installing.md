@@ -205,10 +205,16 @@ are up and running.
 You may install kContainer directly on Event Streams (Kafka) or on Knative Eventing, using channels
 backed by a Kafka cluster managed by the Strimzi operator.
 
-You may also install individually each micoservice and service dependencies, or you may install
+You may also install individually each microservice and service dependencies, or you may install
 all microservices and dependencies at once.
 
-To install individually a microservice, change directory to the microservice directory and then run
+First of all, make sure you change context to the kcontainer namespace created earlier on:
+
+```shell
+kubens kcontainer
+```
+
+Then, to install individually a microservice, change directory to the microservice directory and then run
 
 ```shell
 make deploy-on-knative
