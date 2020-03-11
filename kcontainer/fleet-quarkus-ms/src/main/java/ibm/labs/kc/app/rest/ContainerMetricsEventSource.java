@@ -30,7 +30,7 @@ public class ContainerMetricsEventSource implements EventEmitter {
 	
 	private ContainerMetricsEventSource() {
 		Client client = ClientBuilder.newClient();
-		if (System.getenv("BLUEWATER_CONTAINER") != null){
+		if (System.getenv("BLUEWATER_CONTAINER_ENDPOINT") != null){
 			target = client.target(System.getenv("BLUEWATER_CONTAINER_ENDPOINT"));
 		}	
 		parser = new Gson();

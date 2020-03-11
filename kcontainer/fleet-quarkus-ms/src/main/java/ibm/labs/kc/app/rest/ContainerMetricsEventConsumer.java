@@ -18,7 +18,7 @@ public class ContainerMetricsEventConsumer {
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
 	public Response consumeEvent(String containerEvent) {
-        logger.info("@@@@@ ContainerMetricsEventConsumer @@@@@@@@@ ************ \n" + containerEvent);
+        logger.info("@@@@@ Hello ContainerMetricsEventConsumer @@@@@@@@@ ************ \n" + containerEvent);
         
 	    //return Response.ok().entity(order.getOrderID()).build();
 	    //API contract expects a JSON Object and not just a plaintext string
