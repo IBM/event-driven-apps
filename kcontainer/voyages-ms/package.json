@@ -37,7 +37,7 @@
     "appmetrics-zipkin": "^1.1.1",
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
-    "log4js": "^3.0.5",
+    "log4js": "^6.4.0",
     "strong-supervisor": "^6.2.0",
     "ibm-cloud-env": "^0",
     "node-rdkafka": "^2.6.1",
