@@ -36,7 +36,7 @@
     "appmetrics-prometheus": "^2.0.0",
     "appmetrics-zipkin": "^1.1.1",
     "body-parser": "^1.18.3",
-    "express": "^4.16.4",
+    "express": "^4.17.3",
     "log4js": "^6.4.0",
     "strong-supervisor": "^6.2.0",
     "ibm-cloud-env": "^0",
